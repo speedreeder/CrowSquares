@@ -3,300 +3,100 @@
 @inherits GameBase
 
 <PageTitle>CrowSquares Game</PageTitle>
-<MudGrid Justify="Justify.Center" >
-    <MudItem xs="10">
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
 
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
+<MudDropContainer
+    @ref="DropContainer"
+    T="DropItem" 
+    Items="Items" 
+    CanDropClass="mud-border-info" 
+    NoDropClass="mud-border-error" 
+    CanDrop="@( (item, identifier ) => CanDrop(item, identifier))" 
+    ItemsSelector="@((item, dropZone) => item.Zone == dropZone)"
+    ItemIsDisabled="@( item => item.Zone != "gutter")"
+    ItemDropped="ItemUpdated" 
+    Class="">
+    <ChildContent>
+        <div class="border-2 border-solid mud-border-lines-default">
+            @for (var r = 0; r < 9; r++)
+            {
+                var row = r.ToString();
+                <div class="d-flex">
+                    @for (var c = 0; c < 9; c++)
+                    {
+                        var col = c.ToString();
+                        <MudDropZone
+                            T="DropItem"
+                            Identifier="@($"{row}{col}")"
+                            DraggingClass="mud-theme-success"
+                            Class="d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default"
+                            Style="height: 64px; width: 64px;"
+                        />
+                    }
+                </div>
+            }
+        </div>
+        <div>
+            <MudDropZone
+                T="DropItem"
+                Identifier="gutter"
+            />
+        </div>
+        
+    </ChildContent>
+    <ItemRenderer>
+        <div class="d-flex justify-center align-center flex-grow-1">
+            <MudIcon Icon="@context.Icon" Color="@context.Color" Size="Size.Large" />
+        </div>
+    </ItemRenderer>
+</MudDropContainer>
 
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
+<MudButton 
+    Style="height: 100px; width: 100px; background-color: blue" 
+    Size="Size.Large" Color="Color.Primary" OnClick="GenerateShapes"
+/>
 
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
-
-    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-        <MudItem xs="1">
-            <MudPaper Elevation="0" style="@($"background-color: {Color}; aspect-ratio: 1/1")" Square="true" Outlined="true" @onclick="@ChangeColor"></MudPaper>
-        </MudItem>
-    </MudGrid>
+@*<MudGrid Justify="Justify.Center" >
+    <MudItem xs="8">
+        @for (var row = 1; row <=9; row++)
+        {
+            <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
+                
+                @for (var i = 1; i <= 9; i++)
+                {
+                    var index = row * 9 + i;
+                    <GridItem Color="white" Index="index"></GridItem>
+                }
+                
+            </MudGrid>
+        }
     </MudItem>
 </MudGrid>
+
 <MudGrid Justify="Justify.Center">
-    <MudItem xs="4"></MudItem>
-    <MudItem xs="4"></MudItem>
-    <MudItem xs="4"></MudItem>
-</MudGrid>
+    @foreach (var shape in Shapes)
+    {
+        <MudItem xs="3">
+            @for (var row = 1; row <= 9; row++)
+            {
+                var row1 = row;
+                <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
+
+                    @for (var column = 1; column <= 9; column++)
+                    {
+                        var index = row1 * 9 + column;
+                        var column1 = column;
+                        if (shape.Any(s => s.Row == row1 && s.Column == column1))
+                        {
+                            <GridItem Color="red" Index="index"></GridItem>
+                        }
+                        else
+                        {
+                            <GridItem Color="white" Index="index"></GridItem>
+                        }
+                    }
+                </MudGrid>
+            }
+        </MudItem>
+    }
+</MudGrid>*@
 
