@@ -7,9 +7,12 @@
             public static List<(int Row, int Column)> SinglePoint => new() {(0, 0)};
             public static List<(int Row, int Column)> TwoInARow => new() { (0, 0), (0, 1) };
             public static List<(int Row, int Column)> ThreeInARow => new() { (0, 0), (0, 1), (0, 2) };
-            public static List<(int Row, int Column)> LetterT => new() { (0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (2, 2), (3, 2) };
-            public static List<(int Row, int Column)> TwoPointsDiagonalRight => new() { (0, 0), (1, 1) };
-            public static List<(int Row, int Column)> TwoPointsDiagonalLeft => new() { (0, 1), (1, 0) };
+            public static List<(int Row, int Column)> LetterT => new() { (0, -2), (0, -1), (0, 0), (0, 1), (0, 2), (1, 0), (2, 0), (3, 0) };
+            public static List<(int Row, int Column)> TwoPointsDiagonalRight => new() { (0, 0), (-1, 1) };
+            public static List<(int Row, int Column)> ThreePointsDiagonalRight => new() { (0, 0), (-1, 1), (-2, 2) };
+            public static List<(int Row, int Column)> TwoPointsDiagonalLeft => new() { (0, 0), (-1, -1) };
+            public static List<(int Row, int Column)> ThreePointsDiagonalLeft => new() { (0, 0), (-1, -1), (-2, -2) };
+
         }
 
         public static List<List<(int Row, int Column)>> Shapes = new()
@@ -19,7 +22,9 @@
             ShapeChoices.ThreeInARow,
             ShapeChoices.LetterT,
             ShapeChoices.TwoPointsDiagonalLeft,
-            ShapeChoices.TwoPointsDiagonalRight
+            ShapeChoices.TwoPointsDiagonalRight,
+            ShapeChoices.ThreePointsDiagonalLeft,
+            ShapeChoices.ThreePointsDiagonalRight
         };
 
         public static List<(int Row, int Column)> RandomShape

@@ -10,7 +10,11 @@ namespace CrowSquares.Pages
         public string RowStyle = "";
         public MudDropContainer<DropItem> DropContainer { get; set; }
 
+        public DropItem CurrentlyDraggingItem { get; set; }
+
         protected List<DropItem> Items = new();
+
+        protected Dictionary<string, MudDropZone<DropItem>> Grid { get; set; } = new();
 
         public class DropItem
         {
@@ -36,13 +40,61 @@ namespace CrowSquares.Pages
                     Icon = Icons.Custom.Uncategorized.ChessRook,
                     Color = Color.Primary
                 });
-
             }
+
+            if (!Items.Any(i => i.Zone.Contains("gutter", StringComparison.Ordinal)))
+            {
+                GenerateShapes();
+            }
+
+            foreach (var gridSquare in Grid)
+            {
+                gridSquare.Value.Class =
+                    "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
+            }
+        }
+
+        protected void OnDragEnter(string coordinates)
+        {
+            var foundGridSquares = new List<MudDropZone<DropItem>>();
+
+            foreach (var point in CurrentlyDraggingItem.Points)
+            {
+                var foundSquare =
+                    Grid.GetValueOrDefault(coordinates.ToPointsTuple(point.Row, point.Column).ToPointsString());
+
+                if (foundSquare != null) foundGridSquares.Add(foundSquare);
+            }
+
+            foreach (var gridSquare in Grid)
+            {
+                gridSquare.Value.Class =
+                    "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
+            }
+
+            foreach (var foundGridSquare in foundGridSquares)
+            {
+                if (DropContainer.CanDrop(CurrentlyDraggingItem, coordinates))
+                    foundGridSquare.Class += " mud-border-info";
+            }
+            DropContainer.Refresh();
+        }
+
+        protected void OnDragEnd()
+        {
+            foreach (var gridSquare in Grid)
+            {
+                gridSquare.Value.Class =
+                    "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
+            }
+            DropContainer.Refresh();
         }
 
         protected bool CanDrop(DropItem item, string identifierOfDropZone)
         {
-            if (identifierOfDropZone == "gutter") return false;
+            if (identifierOfDropZone.Contains("gutter", StringComparison.Ordinal)) return false;
+            CurrentlyDraggingItem = item;
+
             // nothing is in that space being dropped on already
             var cursorSpaceNotOccupied = Items.All(x => identifierOfDropZone != x.Zone);
 
@@ -55,8 +107,8 @@ namespace CrowSquares.Pages
                     {
                         var transformedTuple = identifierOfDropZone.ToPointsTuple(p.Row, p.Column);
                         return transformedTuple.ToPointsString() != z &&
-                               transformedTuple.Column < 9 &&
-                               transformedTuple.Row < 9;
+                               transformedTuple.Column is < 9 and >= 0 &&
+                               transformedTuple.Row is < 9 and >= 0;
                     }));
             
             return cursorSpaceNotOccupied && otherPointsNotOccupiedOrOutside;
@@ -64,16 +116,28 @@ namespace CrowSquares.Pages
 
         public void GenerateShapes()
         {
-            Items.AddRange(ShapeLibrary.RandomShapes(3).Select(s => new DropItem
+            for (var i = 0; i < 3; i++)
             {
-                Color = Color.Primary,
-                Icon = Icons.Custom.Uncategorized.ChessRook,
-                Points = s,
-                Zone = "gutter"
-            }));
+                Items.Add(new DropItem
+                {
+                    Color = Color.Primary,
+                    Icon = Icons.Custom.Uncategorized.ChessRook,
+                    Points = ShapeLibrary.RandomShape,
+                    Zone = $"gutter{i}"
+                });
+            }
+
             StateHasChanged();
 
             if(DropContainer != null)
+                DropContainer.Refresh();
+        }
+
+        public void ClearGrid()
+        {
+            Items.RemoveAll(i => !i.Zone.Contains("gutter"));
+
+            if (DropContainer != null)
                 DropContainer.Refresh();
         }
     }
