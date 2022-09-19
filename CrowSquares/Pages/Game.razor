@@ -1,4 +1,4 @@
-﻿@page "/game"
+﻿@page "/"
 
 @inherits GameBase
 
@@ -75,11 +75,11 @@
 </MudDropContainer>
 
 <MudButton 
-    Style="height: 100px; width: 100px; background-color: blue" 
+Style="height: 100px; width: 100px; background-color: blue" 
     Size="Size.Large" Color="Color.Primary" OnClick="GenerateShapes"
 >New Shapes</MudButton>
 
 <MudButton 
-    Style="height: 100px; width: 100px; background-color: red" 
-    Size="Size.Large" Color="Color.Primary" OnClick="ClearGrid"
-></MudButton>
+    Style="height: 100px; width: 100px;"
+    Size="Size.Large" Color="Color.Error" OnClick="ClearGrid"
+>Clear Grid</MudButton>
