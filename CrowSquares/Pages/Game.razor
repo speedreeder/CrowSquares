@@ -8,7 +8,7 @@
     @ref="DropContainer"
     T="DropItem" 
     Items="Items"
-    CanDrop="@( (item, identifier ) => CanDrop(item, identifier))" 
+    CanDrop="@( (item, identifier ) => CanDrop(item, identifier))"
     ItemsSelector="@((item, dropZone) => item.Zone == dropZone)"
     ItemIsDisabled="@( item => !item.Zone.Contains("gutter", StringComparison.Ordinal))"
     ItemDropped="ItemUpdated"
@@ -16,30 +16,33 @@
 >
     <ChildContent>
         <MudGrid Justify="Justify.Center">
-            <MudItem xs="8">
-                @for (var r = 0; r < 9; r++)
-                {
-                    var row = r.ToString();
-                    <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
-                        @for (var c = 0; c < 9; c++)
-                        {
-                            var coords = $"{row}{c.ToString()}";
-                            <MudItem xs="1">
-                                <div @ondragenter="@(() => OnDragEnter(coords))"
-                                     >
-                                    <MudDropZone
-                                        Style="@("aspect-ratio: 1/1;")"
-                                        @ref="@(Grid[coords])"
-                                        T="DropItem"
-                                        Identifier="@(coords)"
-                                        DraggingClass="mud-theme-success"
-                                        Class="d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default">
-                                    </MudDropZone>
-                                </div>
-                            </MudItem>
-                        }
-                    </MudGrid>
-                }
+            <MudItem xs="8" >
+                
+                    @for (var r = 0; r < 9; r++)
+                    {
+                        var row = r.ToString();
+                        <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
+                            @for (var c = 0; c < 9; c++)
+                            {
+                                var coords = $"{row}{c.ToString()}";
+                                <MudItem xs="1">
+                                    <div  
+                                        @ondragenter="@(() => OnDragEnter(coords))"
+                                        @ondragleave="@(() => OnDragLeaveGrid(coords))">
+                                        <MudDropZone
+                                            Style="@("aspect-ratio: 1/1;")"
+                                            @ref="@(Grid[coords])"
+                                            T="DropItem"
+                                            Identifier="@(coords)"
+                                            DraggingClass="mud-theme-success"
+                                            Class="d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default">
+                                        </MudDropZone>
+                                    </div>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    }
+                
             </MudItem>
         </MudGrid>
         
@@ -74,12 +77,6 @@
     </ItemRenderer>
 </MudDropContainer>
 
-<MudButton 
-Style="height: 100px; width: 100px; background-color: blue" 
-    Size="Size.Large" Color="Color.Primary" OnClick="GenerateShapes"
->New Shapes</MudButton>
+<MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Primary" OnClick="GenerateShapes">New Shapes</MudButton>
 
-<MudButton 
-    Style="height: 100px; width: 100px;"
-    Size="Size.Large" Color="Color.Error" OnClick="ClearGrid"
->Clear Grid</MudButton>
+<MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Error" OnClick="ClearGrid">Clear Grid</MudButton>

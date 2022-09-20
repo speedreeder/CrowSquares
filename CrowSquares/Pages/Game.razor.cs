@@ -1,6 +1,7 @@
 ﻿using CrowSquares.Extensions;
 using CrowSquares.Utilities;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
 namespace CrowSquares.Pages
@@ -15,6 +16,7 @@ namespace CrowSquares.Pages
         protected List<DropItem> Items = new();
 
         protected Dictionary<string, MudDropZone<DropItem>> Grid { get; set; } = new();
+        protected bool OnDragEnterFired = false;
 
         public class DropItem
         {
@@ -56,6 +58,7 @@ namespace CrowSquares.Pages
 
         protected void OnDragEnter(string coordinates)
         {
+            OnDragEnterFired = true;
             var foundGridSquares = new List<MudDropZone<DropItem>>();
 
             foreach (var point in CurrentlyDraggingItem.Points)
@@ -68,16 +71,37 @@ namespace CrowSquares.Pages
 
             foreach (var gridSquare in Grid)
             {
+                //gridSquare.Value.CanDrop = _ => false;
                 gridSquare.Value.Class =
                     "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
             }
+            DropContainer.Refresh();
 
             foreach (var foundGridSquare in foundGridSquares)
             {
                 if (DropContainer.CanDrop(CurrentlyDraggingItem, coordinates))
+                {
+                    //foundGridSquare.CanDrop = _ => true;
+                    //foundGridSquare.CanDropClass = "mud-border-info";
                     foundGridSquare.Class += " mud-border-info";
+                }
             }
             DropContainer.Refresh();
+        }
+
+        protected void OnDragLeaveGrid(string coordinates)
+        {
+            if (!OnDragEnterFired)
+            {
+                foreach (var gridSquare in Grid)
+                {
+                    gridSquare.Value.Class =
+                        "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
+                }
+                DropContainer.Refresh();
+            }
+
+            OnDragEnterFired = false;
         }
 
         protected void OnDragEnd()
