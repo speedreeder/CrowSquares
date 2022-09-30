@@ -28,7 +28,8 @@
                                 <MudItem xs="1">
                                     <div  
                                         @ondragenter="@(() => OnDragEnter(coords))"
-                                        @ondragleave="@(() => OnDragLeaveGrid(coords))">
+                                        @ondragleave="@(() => OnDragLeaveGrid(coords))"
+                                        >
                                         <MudDropZone
                                             Style="@("aspect-ratio: 1/1;")"
                                             @ref="@(Grid[coords])"
@@ -50,20 +51,31 @@
             <MudItem xs="3">
                 <MudDropZone 
                     T="DropItem"
+                    @ref="Gutter0"
+                    @ondragstart="() => OnDragStartGutter(Gutter0)"
+                    @ondragend="() => OnDragEndGutter(Gutter0)"
                     Identifier="gutter0"
                 >
                 </MudDropZone>
             </MudItem>
             <MudItem xs="3">
-                <MudDropZone 
-                    T="DropItem"
-                    Identifier="gutter1"
-                >
-                </MudDropZone>
+                
+                    <MudDropZone
+                        T="DropItem"
+                        @ref="Gutter1"
+                        @ondragstart="() => OnDragStartGutter(Gutter1)"
+                        @ondragend="() => OnDragEndGutter(Gutter1)"
+                        Identifier="gutter1">
+                    </MudDropZone>
+                
+                
             </MudItem>
             <MudItem xs="3">
                 <MudDropZone
                     T="DropItem"
+                    @ref="Gutter2"
+                    @ondragstart="() => OnDragStartGutter(Gutter2)"
+                    @ondragend="() => OnDragEndGutter(Gutter2)"
                     Identifier="gutter2"
                 >
                 </MudDropZone>

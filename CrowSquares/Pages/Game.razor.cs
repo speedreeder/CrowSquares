@@ -12,6 +12,9 @@ namespace CrowSquares.Pages
         public MudDropContainer<DropItem> DropContainer { get; set; }
 
         public DropItem CurrentlyDraggingItem { get; set; }
+        public MudDropZone<DropItem> Gutter0 { get; set; }
+        public MudDropZone<DropItem> Gutter1 { get; set; }
+        public MudDropZone<DropItem> Gutter2 { get; set; }
 
         protected List<DropItem> Items = new();
 
@@ -54,6 +57,22 @@ namespace CrowSquares.Pages
                 gridSquare.Value.Class =
                     "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
             }
+
+            Gutter0.Class = "";
+            Gutter1.Class = "";
+            Gutter2.Class = "";
+        }
+
+        protected void OnDragStartGutter(MudDropZone<DropItem> gutter)
+        {
+            if (gutter != null)
+                gutter.Class = "invisible";
+        }
+
+        protected void OnDragEndGutter(MudDropZone<DropItem> gutter)
+        {
+            if (gutter != null)
+                gutter.Class = "";
         }
 
         protected void OnDragEnter(string coordinates)
@@ -104,7 +123,7 @@ namespace CrowSquares.Pages
             OnDragEnterFired = false;
         }
 
-        protected void OnDragEnd()
+        protected void OnDragEnd(DragEventArgs args)
         {
             foreach (var gridSquare in Grid)
             {
@@ -140,6 +159,8 @@ namespace CrowSquares.Pages
 
         public void GenerateShapes()
         {
+            Items.RemoveAll(i => i.Zone.StartsWith("gutter"));
+
             for (var i = 0; i < 3; i++)
             {
                 Items.Add(new DropItem
