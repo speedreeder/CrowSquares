@@ -16,6 +16,12 @@ namespace CrowSquares.Pages
         public MudDropZone<DropItem> Gutter1 { get; set; }
         public MudDropZone<DropItem> Gutter2 { get; set; }
 
+        public int CompletedRows { get; set; }
+        public int CompletedColumns { get; set; }
+
+        public int CompletedSquares { get; set; }
+
+
         protected List<DropItem> Items = new();
 
         protected Dictionary<string, MudDropZone<DropItem>> Grid { get; set; } = new();
@@ -46,6 +52,8 @@ namespace CrowSquares.Pages
                     Color = Color.Primary
                 });
             }
+
+            CheckCompletions();
 
             if (!Items.Any(i => i.Zone.Contains("gutter", StringComparison.Ordinal)))
             {
@@ -184,6 +192,86 @@ namespace CrowSquares.Pages
 
             if (DropContainer != null)
                 DropContainer.Refresh();
+        }
+
+        private void CheckCompletions()
+        {
+            var itemsToRemove = new List<DropItem>();
+
+            var rows = new List<List<DropItem>>();
+            for (var j = 0; j < 9; j++)
+            {
+                rows.Add(Items.Where(i => i.Zone[..1] == j.ToString()).ToList());
+            }
+
+            foreach (var row in rows.Where(row => row.Count == 9))
+            {
+                CompletedRows++;
+                itemsToRemove.AddRange(row);
+                //Items.RemoveAll(i => row.Contains(i));
+            }
+
+            var columns = new List<List<DropItem>>();
+            for (var j = 0; j < 9; j++)
+            {
+                columns.Add(Items.Where(i => i.Zone[1..2] == j.ToString()).ToList());
+            }
+
+            foreach (var column in columns.Where(column => column.Count == 9))
+            {
+                CompletedColumns++;
+                itemsToRemove.AddRange(column);
+                //Items.RemoveAll(i => column.Contains(i));
+            }
+
+            var squares = new List<List<DropItem>>
+            {
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row <= 2 && i.Column <= 2)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row <= 2 && i.Column >= 3 && i.Column <= 5)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row <= 2 && i.Column >= 6)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column <= 2)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column >= 3 && i.Column <= 5)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column >= 6)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row >= 6 && i.Column <= 2)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row >= 6 && i.Column >= 3 && i.Column <= 5)
+                    .Select(i => i.Item)
+                    .ToList(),
+                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                    .Where(i => i.Row >= 6 && i.Column >= 6)
+                    .Select(i => i.Item)
+                    .ToList()
+            };
+
+            foreach (var square in squares.Where(s => s.Count == 9))
+            {
+                CompletedSquares++;
+                itemsToRemove.AddRange(square);
+            }
+
+            Items.RemoveAll(i => itemsToRemove.Contains(i));
+
         }
     }
 }

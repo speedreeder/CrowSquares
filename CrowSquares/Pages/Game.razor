@@ -20,18 +20,23 @@
                 
                     @for (var r = 0; r < 9; r++)
                     {
-                        var row = r.ToString();
+                        var row = r;
                         <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
                             @for (var c = 0; c < 9; c++)
                             {
-                                var coords = $"{row}{c.ToString()}";
+                                var backgroundColor = "transparent";
+                                if ((row is <= 2 or >= 6 && c is <= 2 or >= 6)
+                                    || (row is >= 3 and <= 5 && c is >= 3 and <= 5))
+                                {
+                                    backgroundColor = "lightblue";
+                                }
+                                var coords = $"{row.ToString()}{c.ToString()}";
                                 <MudItem xs="1">
-                                    <div  
+                                    <div
                                         @ondragenter="@(() => OnDragEnter(coords))"
-                                        @ondragleave="@(() => OnDragLeaveGrid(coords))"
-                                        >
+                                        @ondragleave="@(() => OnDragLeaveGrid(coords))">
                                         <MudDropZone
-                                            Style="@("aspect-ratio: 1/1;")"
+                                            Style="@($"aspect-ratio: 1/1;background-color: {backgroundColor}")"
                                             @ref="@(Grid[coords])"
                                             T="DropItem"
                                             Identifier="@(coords)"
@@ -92,3 +97,10 @@
 <MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Primary" OnClick="GenerateShapes">New Shapes</MudButton>
 
 <MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Error" OnClick="ClearGrid">Clear Grid</MudButton>
+
+<MudText Typo="Typo.h3">C: @CompletedColumns</MudText>
+
+<MudText Typo="Typo.h3">R: @CompletedRows</MudText>
+<MudText Typo="Typo.h3">S: @CompletedSquares</MudText>
+
+
