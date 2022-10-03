@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+@using CrowSquares.Models
 @inherits GameBase
 
 <PageTitle>CrowSquares Game</PageTitle>
@@ -56,6 +57,7 @@
             <MudItem xs="3">
                 <MudDropZone 
                     T="DropItem"
+                    ItemIsDisabled="@(item => false)"
                     @ref="Gutter0"
                     @ondragstart="() => OnDragStartGutter(Gutter0)"
                     @ondragend="() => OnDragEndGutter(Gutter0)"
@@ -64,16 +66,13 @@
                 </MudDropZone>
             </MudItem>
             <MudItem xs="3">
-                
-                    <MudDropZone
+                <MudDropZone
                         T="DropItem"
                         @ref="Gutter1"
                         @ondragstart="() => OnDragStartGutter(Gutter1)"
                         @ondragend="() => OnDragEndGutter(Gutter1)"
                         Identifier="gutter1">
                     </MudDropZone>
-                
-                
             </MudItem>
             <MudItem xs="3">
                 <MudDropZone

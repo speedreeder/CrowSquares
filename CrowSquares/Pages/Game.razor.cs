@@ -1,4 +1,5 @@
 ﻿using CrowSquares.Extensions;
+using CrowSquares.Models;
 using CrowSquares.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -26,14 +27,6 @@ namespace CrowSquares.Pages
 
         protected Dictionary<string, MudDropZone<DropItem>> Grid { get; set; } = new();
         protected bool OnDragEnterFired = false;
-
-        public class DropItem
-        {
-            public string Icon { get; init; }
-            public Color Color { get; init; }
-            public string Zone { get; set; }
-            public List<(int Row, int Column)> Points { get; set; }
-        }
 
         protected override void OnInitialized()
         {
@@ -226,39 +219,48 @@ namespace CrowSquares.Pages
 
             var squares = new List<List<DropItem>>
             {
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row <= 2 && i.Column <= 2)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row <= 2 && i.Column >= 3 && i.Column <= 5)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row <= 2 && i.Column >= 6)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column <= 2)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column >= 3 && i.Column <= 5)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column >= 6)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row >= 6 && i.Column <= 2)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row >= 6 && i.Column >= 3 && i.Column <= 5)
                     .Select(i => i.Item)
                     .ToList(),
-                Items.Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
+                Items.Where(i => !i.Zone.Contains("gutter"))
+                    .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
                     .Where(i => i.Row >= 6 && i.Column >= 6)
                     .Select(i => i.Item)
                     .ToList()
