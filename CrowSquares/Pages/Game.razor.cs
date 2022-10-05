@@ -47,6 +47,7 @@ namespace CrowSquares.Pages
             }
 
             CheckCompletions();
+            ReevaluateFitsInGrid(Items.Where(i => i.Zone.Contains("gutter")));
 
             if (!Items.Any(i => i.Zone.Contains("gutter", StringComparison.Ordinal)))
             {
@@ -164,19 +165,31 @@ namespace CrowSquares.Pages
 
             for (var i = 0; i < 3; i++)
             {
-                Items.Add(new DropItem
+                var item = new DropItem
                 {
                     Color = Color.Primary,
                     Icon = Icons.Custom.Uncategorized.ChessRook,
                     Points = ShapeLibrary.RandomShape,
                     Zone = $"gutter{i}"
-                });
+                };
+
+                item.FitsInGrid = item.CheckFitsInGrid(Items.Where(e => !e.Zone.Contains("gutter")).ToList());
+
+                Items.Add(item);
             }
 
             StateHasChanged();
 
             if(DropContainer != null)
                 DropContainer.Refresh();
+        }
+
+        private void ReevaluateFitsInGrid(IEnumerable<DropItem> items)
+        {
+            foreach (var dropItem in items)
+            {
+                dropItem.FitsInGrid = dropItem.CheckFitsInGrid(Items.Where(e => !e.Zone.Contains("gutter")).ToList());
+            }
         }
 
         public void ClearGrid()

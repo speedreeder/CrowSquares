@@ -57,7 +57,7 @@
             <MudItem xs="3">
                 <MudDropZone 
                     T="DropItem"
-                    ItemIsDisabled="@(item => false)"
+                    ItemIsDisabled="@(item => !item.FitsInGrid)"
                     @ref="Gutter0"
                     @ondragstart="() => OnDragStartGutter(Gutter0)"
                     @ondragend="() => OnDragEndGutter(Gutter0)"
@@ -67,15 +67,17 @@
             </MudItem>
             <MudItem xs="3">
                 <MudDropZone
-                        T="DropItem"
-                        @ref="Gutter1"
-                        @ondragstart="() => OnDragStartGutter(Gutter1)"
-                        @ondragend="() => OnDragEndGutter(Gutter1)"
-                        Identifier="gutter1">
-                    </MudDropZone>
+                    T="DropItem"
+                    ItemIsDisabled="@(item => !item.FitsInGrid)"
+                    @ref="Gutter1"
+                    @ondragstart="() => OnDragStartGutter(Gutter1)"
+                    @ondragend="() => OnDragEndGutter(Gutter1)"
+                    Identifier="gutter1">
+                </MudDropZone>
             </MudItem>
             <MudItem xs="3">
                 <MudDropZone
+                    ItemIsDisabled="@(item => !item.FitsInGrid)"
                     T="DropItem"
                     @ref="Gutter2"
                     @ondragstart="() => OnDragStartGutter(Gutter2)"
