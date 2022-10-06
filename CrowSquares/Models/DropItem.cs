@@ -25,11 +25,9 @@ namespace CrowSquares.Models
                         {
                             var pointNotOccupied =
                                 gridItems.FirstOrDefault(g => g.Zone == transformedTuple.ToPointsString()) == null;
-                            //var pointNotOccupied = gridItems.Select(g => g.Zone)
-                            //    .Any(g => g == transformedTuple.ToPointsString());
 
-                            return transformedTuple.Column is < 8 and >= 0 ||
-                                   transformedTuple.Row is < 8 and >= 0 ||
+                            return transformedTuple.Column is < 8 and >= 0 &&
+                                   transformedTuple.Row is < 8 and >= 0 &&
                                    pointNotOccupied;
                         });
 

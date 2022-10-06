@@ -62,7 +62,7 @@
                     @ondragstart="() => OnDragStartGutter(Gutter0)"
                     @ondragend="() => OnDragEndGutter(Gutter0)"
                     Identifier="gutter0"
-                >
+                    DisabledClass="gutter-disabled">
                 </MudDropZone>
             </MudItem>
             <MudItem xs="3">
@@ -72,7 +72,8 @@
                     @ref="Gutter1"
                     @ondragstart="() => OnDragStartGutter(Gutter1)"
                     @ondragend="() => OnDragEndGutter(Gutter1)"
-                    Identifier="gutter1">
+                    Identifier="gutter1"
+                             DisabledClass="gutter-disabled">
                 </MudDropZone>
             </MudItem>
             <MudItem xs="3">
@@ -83,6 +84,7 @@
                     @ondragstart="() => OnDragStartGutter(Gutter2)"
                     @ondragend="() => OnDragEndGutter(Gutter2)"
                     Identifier="gutter2"
+                    DisabledClass="gutter-disabled"
                 >
                 </MudDropZone>
             </MudItem>
@@ -104,4 +106,9 @@
 <MudText Typo="Typo.h3">R: @CompletedRows</MudText>
 <MudText Typo="Typo.h3">S: @CompletedSquares</MudText>
 
+<style>
+    .gutter-disabled svg {
+        color:red!important
+    }
+</style>
 
