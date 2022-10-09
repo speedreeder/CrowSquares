@@ -5,21 +5,29 @@
 
 <PageTitle>CrowSquares Game</PageTitle>
 
+<MudGrid Justify="Justify.Center">
+    <MudItem>
+        <MudText Typo="Typo.h3">Points: @Score</MudText>
+    </MudItem>
+    <MudItem>
+        <MudText Typo="Typo.h3">State: @Level?.State.ToString()</MudText>
+    </MudItem>
+</MudGrid>
+
 <MudDropContainer
     @ref="DropContainer"
     T="DropItem" 
     Items="Items"
     CanDrop="@( (item, identifier ) => CanDrop(item, identifier))"
     ItemsSelector="@((item, dropZone) => item.Zone == dropZone)"
-    ItemIsDisabled="@( item => !item.Zone.Contains("gutter", StringComparison.Ordinal))"
+    ItemIsDisabled="@( item => !item.Zone.Contains("gutter", StringComparison.Ordinal) || item.IsLocked)"
     ItemDropped="ItemUpdated"
     @ondragend="OnDragEnd"
 >
     <ChildContent>
         <MudGrid Justify="Justify.Center">
             <MudItem xs="8" >
-                
-                    @for (var r = 0; r < 9; r++)
+                @for (var r = 0; r < 9; r++)
                     {
                         var row = r;
                         <MudGrid Style="@(RowStyle)" Spacing="0" Justify="Justify.Center">
@@ -101,10 +109,7 @@
 
 <MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Error" OnClick="ClearGrid">Clear Grid</MudButton>
 
-<MudText Typo="Typo.h3">C: @CompletedColumns</MudText>
-
-<MudText Typo="Typo.h3">R: @CompletedRows</MudText>
-<MudText Typo="Typo.h3">S: @CompletedSquares</MudText>
+<MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Primary" OnClick="GenerateLevel">New Level</MudButton>
 
 <style>
     .gutter-disabled svg {

@@ -10,6 +10,7 @@ namespace CrowSquares.Models
         public string Zone { get; set; }
         public List<(int Row, int Column)> Points { get; set; }
         public bool FitsInGrid { get; set; }
+        public bool IsLocked { get; set; }
 
         public bool CheckFitsInGrid(List<DropItem> gridItems)
         {

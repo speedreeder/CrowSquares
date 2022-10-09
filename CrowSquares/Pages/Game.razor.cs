@@ -1,4 +1,5 @@
 ﻿using CrowSquares.Extensions;
+using CrowSquares.Levels;
 using CrowSquares.Models;
 using CrowSquares.Utilities;
 using Microsoft.AspNetCore.Components;
@@ -17,19 +18,19 @@ namespace CrowSquares.Pages
         public MudDropZone<DropItem> Gutter1 { get; set; }
         public MudDropZone<DropItem> Gutter2 { get; set; }
 
-        public int CompletedRows { get; set; }
-        public int CompletedColumns { get; set; }
-
-        public int CompletedSquares { get; set; }
-
+        public int Score { get; set; }
+        public int StreakCounter { get; set; }
 
         protected List<DropItem> Items = new();
 
         protected Dictionary<string, MudDropZone<DropItem>> Grid { get; set; } = new();
-        protected bool OnDragEnterFired = false;
+        protected bool OnDragEnterFired;
+
+        public Level Level { get; set; }
 
         protected override void OnInitialized()
         {
+            GenerateLevel();
             GenerateShapes();
         }
 
@@ -41,13 +42,17 @@ namespace CrowSquares.Pages
                 Items.Add(new DropItem
                 {
                     Zone = dropItem.DropzoneIdentifier.ToPointsTuple(points.Row, points.Column).ToPointsString(),
-                    Icon = Icons.Custom.Uncategorized.ChessRook,
+                    Icon = Icons.Custom.Brands.Twitter,
                     Color = Color.Primary
                 });
             }
 
-            CheckCompletions();
-            ReevaluateFitsInGrid(Items.Where(i => i.Zone.Contains("gutter")));
+            var completionPoints = CheckCompletionsAndGetScore();
+            Score += dropItem.Item.Points.Count + completionPoints;
+
+            Items.ItemsFitInList(Items.Where(i => i.Zone.Contains("gutter")));
+
+            //ReevaluateFitsInGrid(Items.Where(i => i.Zone.Contains("gutter")));
 
             if (!Items.Any(i => i.Zone.Contains("gutter", StringComparison.Ordinal)))
             {
@@ -63,6 +68,8 @@ namespace CrowSquares.Pages
             Gutter0.Class = "";
             Gutter1.Class = "";
             Gutter2.Class = "";
+
+            Level.CheckLevel(Items);
         }
 
         protected void OnDragStartGutter(MudDropZone<DropItem> gutter)
@@ -92,7 +99,6 @@ namespace CrowSquares.Pages
 
             foreach (var gridSquare in Grid)
             {
-                //gridSquare.Value.CanDrop = _ => false;
                 gridSquare.Value.Class =
                     "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
             }
@@ -102,8 +108,6 @@ namespace CrowSquares.Pages
             {
                 if (DropContainer.CanDrop(CurrentlyDraggingItem, coordinates))
                 {
-                    //foundGridSquare.CanDrop = _ => true;
-                    //foundGridSquare.CanDropClass = "mud-border-info";
                     foundGridSquare.Class += " mud-border-info";
                 }
             }
@@ -168,7 +172,7 @@ namespace CrowSquares.Pages
                 var item = new DropItem
                 {
                     Color = Color.Primary,
-                    Icon = Icons.Custom.Uncategorized.ChessRook,
+                    Icon = Icons.Custom.Brands.Twitter,
                     Points = ShapeLibrary.RandomShape,
                     Zone = $"gutter{i}"
                 };
@@ -184,13 +188,13 @@ namespace CrowSquares.Pages
                 DropContainer.Refresh();
         }
 
-        private void ReevaluateFitsInGrid(IEnumerable<DropItem> items)
-        {
-            foreach (var dropItem in items)
-            {
-                dropItem.FitsInGrid = dropItem.CheckFitsInGrid(Items.Where(e => !e.Zone.Contains("gutter")).ToList());
-            }
-        }
+        //private void ReevaluateFitsInGrid(IEnumerable<DropItem> items)
+        //{
+        //    foreach (var dropItem in items)
+        //    {
+        //        dropItem.FitsInGrid = dropItem.CheckFitsInGrid(Items.Where(e => !e.Zone.Contains("gutter")).ToList());
+        //    }
+        //}
 
         public void ClearGrid()
         {
@@ -200,8 +204,9 @@ namespace CrowSquares.Pages
                 DropContainer.Refresh();
         }
 
-        private void CheckCompletions()
+        private int CheckCompletionsAndGetScore()
         {
+            var completions = 0;
             var itemsToRemove = new List<DropItem>();
 
             var rows = new List<List<DropItem>>();
@@ -212,9 +217,8 @@ namespace CrowSquares.Pages
 
             foreach (var row in rows.Where(row => row.Count == 9))
             {
-                CompletedRows++;
-                itemsToRemove.AddRange(row);
-                //Items.RemoveAll(i => row.Contains(i));
+                completions++;
+                itemsToRemove.AddRange(row.Where(r => !r.IsLocked));
             }
 
             var columns = new List<List<DropItem>>();
@@ -225,9 +229,8 @@ namespace CrowSquares.Pages
 
             foreach (var column in columns.Where(column => column.Count == 9))
             {
-                CompletedColumns++;
-                itemsToRemove.AddRange(column);
-                //Items.RemoveAll(i => column.Contains(i));
+                completions++;
+                itemsToRemove.AddRange(column.Where(r => !r.IsLocked));
             }
 
             var squares = new List<List<DropItem>>
@@ -239,7 +242,7 @@ namespace CrowSquares.Pages
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
                     .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
-                    .Where(i => i.Row <= 2 && i.Column >= 3 && i.Column <= 5)
+                    .Where(i => i.Row <= 2 && i.Column is >= 3 and <= 5)
                     .Select(i => i.Item)
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
@@ -249,17 +252,17 @@ namespace CrowSquares.Pages
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
                     .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
-                    .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column <= 2)
+                    .Where(i => i.Row is >= 3 and <= 5 && i.Column <= 2)
                     .Select(i => i.Item)
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
                     .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
-                    .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column >= 3 && i.Column <= 5)
+                    .Where(i => i.Row is >= 3 and <= 5 && i.Column is >= 3 and <= 5)
                     .Select(i => i.Item)
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
                     .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
-                    .Where(i => i.Row >= 3 && i.Row <= 5 && i.Column >= 6)
+                    .Where(i => i.Row is >= 3 and <= 5 && i.Column >= 6)
                     .Select(i => i.Item)
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
@@ -269,7 +272,7 @@ namespace CrowSquares.Pages
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
                     .Select(i => new { Row = int.Parse(i.Zone[..1]), Column = int.Parse(i.Zone[1..2]), Item = i })
-                    .Where(i => i.Row >= 6 && i.Column >= 3 && i.Column <= 5)
+                    .Where(i => i.Row >= 6 && i.Column is >= 3 and <= 5)
                     .Select(i => i.Item)
                     .ToList(),
                 Items.Where(i => !i.Zone.Contains("gutter"))
@@ -281,12 +284,29 @@ namespace CrowSquares.Pages
 
             foreach (var square in squares.Where(s => s.Count == 9))
             {
-                CompletedSquares++;
-                itemsToRemove.AddRange(square);
+                completions++;
+                itemsToRemove.AddRange(square.Where(r => !r.IsLocked));
             }
 
             Items.RemoveAll(i => itemsToRemove.Contains(i));
 
+            var points = completions * 18 + (completions == 0 ? completions : completions - 1) * 10 + StreakCounter * 10;
+
+            if (itemsToRemove.Any())
+            {
+                StreakCounter++;
+            }
+            else
+            {
+                StreakCounter = 0;
+            }
+            return points;
+        }
+
+        public void GenerateLevel()
+        {
+            Level = new EggsInTheTrees();
+            Items = Level.InitialLevelCells;
         }
     }
 }
