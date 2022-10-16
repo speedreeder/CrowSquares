@@ -18,7 +18,6 @@ namespace CrowSquares.Pages
         public MudDropZone<DropItem> Gutter1 { get; set; }
         public MudDropZone<DropItem> Gutter2 { get; set; }
 
-        public int Score { get; set; }
         public int StreakCounter { get; set; }
 
         protected List<DropItem> Items = new();
@@ -47,29 +46,34 @@ namespace CrowSquares.Pages
                 });
             }
 
-            var completionPoints = CheckCompletionsAndGetScore();
-            Score += dropItem.Item.Points.Count + completionPoints;
+            Level.CheckLevel();
+            //var completionPoints = CheckCompletionsAndGetScore();
+            //Score += dropItem.Item.Points.Count + completionPoints;
 
             Items.ItemsFitInList(Items.Where(i => i.Zone.Contains("gutter")));
-
-            //ReevaluateFitsInGrid(Items.Where(i => i.Zone.Contains("gutter")));
 
             if (!Items.Any(i => i.Zone.Contains("gutter", StringComparison.Ordinal)))
             {
                 GenerateShapes();
             }
 
-            foreach (var gridSquare in Grid)
-            {
-                gridSquare.Value.Class =
-                    "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
-            }
+            ClearGridBorders();
 
             Gutter0.Class = "";
             Gutter1.Class = "";
             Gutter2.Class = "";
 
-            Level.CheckLevel(Items);
+        }
+
+        protected void OnLevelValueChanged(Level levelChanged)
+        {
+            Level = levelChanged;
+            Items = levelChanged.InitialLevelCells;
+
+            GenerateShapes();
+
+            StateHasChanged();
+            DropContainer.Refresh();
         }
 
         protected void OnDragStartGutter(MudDropZone<DropItem> gutter)
@@ -97,11 +101,7 @@ namespace CrowSquares.Pages
                 if (foundSquare != null) foundGridSquares.Add(foundSquare);
             }
 
-            foreach (var gridSquare in Grid)
-            {
-                gridSquare.Value.Class =
-                    "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
-            }
+            ClearGridBorders();
             DropContainer.Refresh();
 
             foreach (var foundGridSquare in foundGridSquares)
@@ -114,15 +114,11 @@ namespace CrowSquares.Pages
             DropContainer.Refresh();
         }
 
-        protected void OnDragLeaveGrid(string coordinates)
+        protected void OnDragLeaveGrid()
         {
             if (!OnDragEnterFired)
             {
-                foreach (var gridSquare in Grid)
-                {
-                    gridSquare.Value.Class =
-                        "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
-                }
+                ClearGridBorders();
                 DropContainer.Refresh();
             }
 
@@ -131,12 +127,17 @@ namespace CrowSquares.Pages
 
         protected void OnDragEnd(DragEventArgs args)
         {
+            ClearGridBorders();
+            DropContainer.Refresh();
+        }
+
+        private void ClearGridBorders()
+        {
             foreach (var gridSquare in Grid)
             {
                 gridSquare.Value.Class =
                     "d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default";
             }
-            DropContainer.Refresh();
         }
 
         protected bool CanDrop(DropItem item, string identifierOfDropZone)
@@ -144,12 +145,8 @@ namespace CrowSquares.Pages
             if (identifierOfDropZone.Contains("gutter", StringComparison.Ordinal)) return false;
             CurrentlyDraggingItem = item;
 
-            // nothing is in that space being dropped on already
             var cursorSpaceNotOccupied = Items.All(x => identifierOfDropZone != x.Zone);
 
-            // get all the points of all the items
-            // none of their zones can be equal to any of the points of the current dropItem
-            // none of their points can be outside the bounds of the grid
             var otherPointsNotOccupiedOrOutside =
                 Items.Select(i => i.Zone).All(z =>
                     item.Points.All(p =>
@@ -169,11 +166,13 @@ namespace CrowSquares.Pages
 
             for (var i = 0; i < 3; i++)
             {
+                var shape = ShapeLibrary.RandomShape;
                 var item = new DropItem
                 {
                     Color = Color.Primary,
-                    Icon = Icons.Custom.Brands.Twitter,
-                    Points = ShapeLibrary.RandomShape,
+                    Icon = shape.Icon,
+                    //Icon = Icons.Custom.Brands.Twitter,
+                    Points = shape.Points,
                     Zone = $"gutter{i}"
                 };
 
@@ -187,14 +186,6 @@ namespace CrowSquares.Pages
             if(DropContainer != null)
                 DropContainer.Refresh();
         }
-
-        //private void ReevaluateFitsInGrid(IEnumerable<DropItem> items)
-        //{
-        //    foreach (var dropItem in items)
-        //    {
-        //        dropItem.FitsInGrid = dropItem.CheckFitsInGrid(Items.Where(e => !e.Zone.Contains("gutter")).ToList());
-        //    }
-        //}
 
         public void ClearGrid()
         {
@@ -305,7 +296,7 @@ namespace CrowSquares.Pages
 
         public void GenerateLevel()
         {
-            Level = new EggsInTheTrees();
+            Level = new GetToScore(Items);
             Items = Level.InitialLevelCells;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CrowSquares.Extensions;
 using CrowSquares.Models;
+using MudBlazor;
 
 namespace CrowSquares.Levels
 {
@@ -7,20 +8,20 @@ namespace CrowSquares.Levels
     {
         public override LevelType Type => LevelType.FreePlay;
 
-        public FreePlay()
+        public FreePlay(List<DropItem> grid)
         {
+            Grid = grid;
+            Name = "Free Play";
             State = LevelState.Ongoing;
-        }
-
-        public override void CheckLevel(List<DropItem> grid)
-        {
-            var gridItems = grid.Where(i => i.Zone.Contains("gutter")).ToList();
-            grid.ItemsFitInList(gridItems);
-
-            if (gridItems.All(g => !g.FitsInGrid))
+            Goals = new List<LevelGoal>
             {
-                State = LevelState.Failed;
-            }
+                new()
+                {
+                    Current = 0,
+                    GoalText = "Points",
+                    Icon = Icons.Material.Filled.Scoreboard
+                }
+            };
         }
     }
 }

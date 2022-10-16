@@ -1,74 +1,311 @@
 ﻿namespace CrowSquares.Utilities
 {
+    public class Shape
+    {
+        public List<(int Row, int Column)> Points { get; set; }
+        public string Icon { get; set; }
+    }
+
     public class ShapeLibrary
     {
         public struct ShapeChoices
         {
-            public static List<(int Row, int Column)> SinglePoint => new() {(0, 0)};
+            public static Shape SinglePoint => new()
+            {
+                Points = new List<(int Row, int Column)>{(0, 0)}, 
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <rect x=\"20\" y=\"15\" fill=\"#fff\" stroke=\"#000\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> TwoInARow => new() { (0, 0), (0, 1) };
-            public static List<(int Row, int Column)> ThreeInARow => new() { (0, 0), (0, 1), (0, 2) };
-            public static List<(int Row, int Column)> FourInARow => new() { (0, 0), (0, 1), (0, 2), (0, 3) };
-            public static List<(int Row, int Column)> FiveInARow => new() { (0, 0), (0, 1), (0, 2), (0, 3), (0, 4) };
-            public static List<(int Row, int Column)> TwoInARowVertical => new() { (0, 0), (1, 0) };
-            public static List<(int Row, int Column)> ThreeInARowVertical => new() { (0, 0), (1, 0), (2, 0) };
-            public static List<(int Row, int Column)> FourInARowVertical => new() { (0, 0), (1, 0), (2, 0), (3, 0) };
-            public static List<(int Row, int Column)> FiveInARowVertical => new() { (0, 0), (1, 0), (2, 0), (3, 0), (4, 0) };
+            public static Shape TwoInARow => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_2\">\r\n   <rect x=\"14.96875\" y=\"15\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect y=\"15\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"25.03125\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> Cross => new() { (0, 0), (0, 1), (1, 0), (-1, 0), (0, -1) };
-            public static List<(int Row, int Column)> FourSquare => new() { (0, 0), (0, 1), (1, 0), (1, 1) };
+            public static Shape ThreeInARow => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (0, 2) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_2\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" width=\"10\" height=\"10\" id=\"svg_1\" y=\"15\" x=\"9.96875\"/>\r\n   <rect x=\"20.03125\" fill=\"#fff\" stroke=\"#000\" width=\"10\" height=\"10\" id=\"svg_7\" y=\"15\"/>\r\n   <rect x=\"30.03125\" fill=\"#fff\" stroke=\"#000\" width=\"10\" height=\"10\" id=\"svg_3\" y=\"15\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> TwoPointsDiagonalRight => new() { (0, 0), (-1, 1) };
-            public static List<(int Row, int Column)> ThreePointsDiagonalRight => new() { (0, 0), (-1, 1), (-2, 2) };
-            public static List<(int Row, int Column)> FourPointsDiagonalRight => new() { (0, 0), (-1, 1), (-2, 2), (-3, 3) };
-            public static List<(int Row, int Column)> TwoPointsDiagonalLeft => new() { (0, 0), (-1, -1) };
-            public static List<(int Row, int Column)> ThreePointsDiagonalLeft => new() { (0, 0), (-1, -1), (-2, -2) };
-            public static List<(int Row, int Column)> FourPointsDiagonalLeft => new() { (0, 0), (-1, -1), (-2, -2), (-3, -3) };
+            public static Shape FourInARow => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (0, 2), (0, 3) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_5\">\r\n   <rect x=\"5\" y=\"15\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect y=\"15\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"15\"/>\r\n   <rect y=\"15\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"25\"/>\r\n   <rect y=\"15\" id=\"svg_4\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"35\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> CornerBottomLeft => new() { (0, 0), (-1, 0), (0, 1) };
-            public static List<(int Row, int Column)> CornerTopLeft => new() { (0, 0), (0, 1), (1, 0) };
-            public static List<(int Row, int Column)> CornerBottomRight => new() { (0, 0), (0, -1), (-1, 0) };
-            public static List<(int Row, int Column)> CornerTopRight => new() { (0, 0), (0, -1), (0, 1) };
+            public static Shape FiveInARow => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (0, 2), (0, 3), (0, 4) },
+                Icon = "<g id=\"svg_2\">\r\n   <rect y=\"15\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect y=\"15\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"10\"/>\r\n   <rect y=\"15\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n   <rect y=\"15\" id=\"svg_4\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"30\"/>\r\n   <rect y=\"15\" id=\"svg_5\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"40\"/>\r\n  </g>"
+            };
 
-            public static List<(int Row, int Column)> BigCornerBottomLeft => new() { (0, 0), (-1, 0), (0, 1), (-2, 0), (0, 3) };
-            public static List<(int Row, int Column)> BigCornerTopLeft => new() { (0, 0), (0, 1), (1, 0), (0, 2), (2, 0) };
-            public static List<(int Row, int Column)> BigCornerBottomRight => new() { (0, 0), (0, -1), (-1, 0), (0, -2), (-2, 0) };
-            public static List<(int Row, int Column)> BigCornerTopRight => new() { (0, 0), (0, -1), (0, 1), (0, -2), (0, 2) };
+            public static Shape TwoInARowVertical => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_8\">\r\n   <rect transform=\"rotate(90, 25, 20)\" x=\"20\" y=\"15\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(90, 25, 30)\" y=\"25\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> RichardUp => new() { (0, 0), (-1, 0), (-2, 0), (0, -1), (0, 1) };
-            public static List<(int Row, int Column)> RichardDown => new() { (0, 0), (1, 0), (2, 0), (0, -1), (0, 1) };
-            public static List<(int Row, int Column)> RichardLeft => new() { (0, 0), (-1, 0), (1, 0), (0, 1), (0, 2) };
-            public static List<(int Row, int Column)> RichardRight => new() { (0, 0), (-1, 0), (1, 0), (0, -1), (0, -2) };
+            public static Shape ThreeInARowVertical => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0), (2, 0) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_6\">\r\n   <rect transform=\"rotate(90, 25, 15)\" x=\"20\" y=\"10\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(90, 25, 25)\" y=\"20\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n   <rect transform=\"rotate(90, 25, 35)\" y=\"30\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> LilRichardUp => new() { (0, 0), (-1, 0), (0, -1), (0, 1) };
-            public static List<(int Row, int Column)> LilRichardDown => new() { (0, 0), (1, 0), (0, -1), (0, 1) };
-            public static List<(int Row, int Column)> LilRichardLeft => new() { (0, 0), (-1, 0), (1, 0), (0, 1) };
-            public static List<(int Row, int Column)> LilRichardRight => new() { (0, 0), (-1, 0), (1, 0), (0, -1) };
+            public static Shape FourInARowVertical => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0), (2, 0), (3, 0) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 20)\" id=\"svg_5\">\r\n   <rect x=\"5\" y=\"15\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect y=\"15\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"15\"/>\r\n   <rect y=\"15\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"25\"/>\r\n   <rect y=\"15\" id=\"svg_4\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"35\"/>\r\n  </g>\r\n </g>"
+            };
 
+            public static Shape FiveInARowVertical => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0), (2, 0), (3, 0), (4, 0) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_9\">\r\n   <rect x=\"0\" y=\"20\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect y=\"20\" id=\"svg_7\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"10\"/>\r\n   <rect y=\"20\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n   <rect y=\"20\" id=\"svg_4\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"30\"/>\r\n   <rect y=\"20\" id=\"svg_5\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"40\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> LeftWormVertical => new() { (0, 0), (-1, 0), (-1, -1), (-2, -1) };
-            public static List<(int Row, int Column)> LeftWormHorizontal => new() { (0, 0), (0, -1), (-1, 0), (-1, 1) };
+            public static Shape Cross => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (1, 0), (-1, 0), (0, -1) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_5\">\r\n   <rect y=\"10\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n   <rect y=\"20\" id=\"svg_3\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n   <rect y=\"20\" id=\"svg_1\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"30\"/>\r\n   <rect y=\"30\" id=\"svg_2\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"20\"/>\r\n   <rect y=\"20\" id=\"svg_4\" height=\"10\" width=\"10\" stroke=\"#000\" fill=\"#fff\" x=\"10\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> RightWormVertical => new() { (0, 0), (-1, 0), (-1, 1), (-2, 1) };
-            public static List<(int Row, int Column)> RightWormHorizontal => new() { (0, 0), (0, 1), (-1, 0), (-1, -1) };
+            public static Shape FourSquare => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (1, 0), (1, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_5\">\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"15\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_4\" height=\"10\" width=\"10\" y=\"25\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> HelmetTop => new() { (0, 0), (0, -1), (0, 1), (1, -1), (1, 1) };
-            public static List<(int Row, int Column)> HelmetBottom => new() { (0, 0), (0, -1), (0, 1), (1, -1), (1, 1) };
-            public static List<(int Row, int Column)> HelmetLeft => new() { (0, 0), (-1, 0), (1, 0), (-1, 1), (1, 1) };
-            public static List<(int Row, int Column)> HelmetRight => new() { (0, 0), (-1, 0), (1, 0), (-1, -1), (1, -1) };
+            public static Shape TwoPointsDiagonalRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n  <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> LuigiTop => new() { (0, 0), (0, -1), (1, 0), (2, -1) };
-            public static List<(int Row, int Column)> LuigiBottom => new() { (0, 0), (0, 1), (-1, 0), (-2, 0) };
-            public static List<(int Row, int Column)> LuigiLeft => new() { (0, 0), (1, 0), (0, 1), (0, 2) };
-            public static List<(int Row, int Column)> LuigiRight => new() { (0, 0), (-1, 0), (-1, 0), (-2, 0)};
+            public static Shape ThreePointsDiagonalRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 1), (-2, 2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_1\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n  </g>\r\n </g>"
+            };
 
-            public static List<(int Row, int Column)> WaluigiTop => new() { (0, 0), (0, 1), (1, 0), (2, 0)};
-            public static List<(int Row, int Column)> WaluigiBottom => new() { (0, 0), (0, -1), (-1, 0), (-2, 0)};
-            public static List<(int Row, int Column)> WaluigiLeft => new() { (0, 0), (-1, 0), (0, 1), (0, 2) };
-            public static List<(int Row, int Column)> WaluigiRight => new() { (0, 0), (-1, 0), (0, -1), (0, -2) };
+            public static Shape FourPointsDiagonalRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 1), (-2, 2), (-3, 3) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"14.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 19.875, 20)\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"5\" x=\"4.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 9.875, 10)\"/>\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"25\" x=\"24.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 29.875, 30)\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"35\" x=\"34.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 40, 40.125)\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape TwoPointsDiagonalLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, -1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_2\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"14.875\" x=\"25\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(180, 30, 19.875)\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"25.125\" x=\"14.5\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(180, 19.75, 30.125)\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape ThreePointsDiagonalLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, -1), (-2, -2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_1\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape FourPointsDiagonalLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, -1), (-2, -2), (-3, -3) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_1\">\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"14.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 19.875, 20)\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"5\" x=\"4.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 9.875, 10)\"/>\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"25\" x=\"24.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 29.875, 30)\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"35\" x=\"34.875\" stroke=\"#000\" fill=\"#fff\" transform=\"rotate(90, 40, 40.125)\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape CornerBottomLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape CornerTopLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (1, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape CornerBottomRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (-1, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape CornerTopRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape BigCornerBottomLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (0, 1), (-2, 0), (0, 2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_7\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_4\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape BigCornerTopLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (1, 0), (0, 2), (2, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_7\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_4\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape BigCornerBottomRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (-1, 0), (0, -2), (-2, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_7\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_4\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape BigCornerTopRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (0, 1), (0, -2), (0, 2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_7\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"10\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_4\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape RichardUp => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (-2, 0), (0, -1), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"30\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"30\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_4\" height=\"10\" width=\"10\" y=\"10\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape RichardDown => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0), (2, 0), (0, -1), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"30\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"30\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_4\" height=\"10\" width=\"10\" y=\"10\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape RichardLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (1, 0), (0, 1), (0, 2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"30\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"30\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_4\" height=\"10\" width=\"10\" y=\"10\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape RichardRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (1, 0), (0, -1), (0, -2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_1\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"30\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"30\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_4\" height=\"10\" width=\"10\" y=\"10\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LilRichardUp => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (0, -1), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_4\">\r\n   <rect transform=\"rotate(180, 25, 20)\" id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 15, 20)\" id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 25, 30)\" id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 35, 20)\" id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LilRichardDown => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0), (0, -1), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_4\">\r\n   <rect transform=\"rotate(180, 25, 20)\" id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 15, 20)\" id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 25, 30)\" id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 35, 20)\" id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LilRichardLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (1, 0), (0, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_4\">\r\n   <rect transform=\"rotate(180, 25, 20)\" id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 15, 20)\" id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 25, 30)\" id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 35, 20)\" id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LilRichardRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (1, 0), (0, -1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_4\">\r\n   <rect transform=\"rotate(180, 25, 20)\" id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 15, 20)\" id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 25, 30)\" id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect transform=\"rotate(180, 35, 20)\" id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LeftWormVertical => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (-1, -1), (-2, -1) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25.0625, 20)\" id=\"svg_5\">\r\n   <rect x=\"10.0625\" y=\"10\" fill=\"#fff\" stroke=\"#000\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n   <rect y=\"10\" fill=\"#fff\" stroke=\"#000\" x=\"20.0625\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20.0625\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30.0625\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_4\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LeftWormHorizontal => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (-1, 0), (-1, 1) },
+                Icon = "<g id=\"Layer_1\">\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_5\">\r\n   <rect x=\"10\" y=\"10\" fill=\"#fff\" stroke=\"#000\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n   <rect y=\"10\" fill=\"#fff\" stroke=\"#000\" x=\"20\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"20\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"30\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_4\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape RightWormVertical => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (-1, 1), (-2, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_7\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape RightWormHorizontal => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (-1, 0), (-1, -1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_7\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_2\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape HelmetTop => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (0, 1), (1, -1), (1, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"25\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape HelmetBottom => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (0, 1), (1, -1), (1, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"25\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape HelmetLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (1, 0), (-1, 1), (1, 1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"25\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape HelmetRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (1, 0), (-1, -1), (1, -1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"15\" x=\"20\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"15\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"25\" x=\"10\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_2\" height=\"10\" width=\"10\" y=\"15\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"25\" x=\"30\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LuigiTop => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (1, 0), (2, -1) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_2\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LuigiBottom => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (-1, 0), (-2, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_2\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LuigiLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (1, 0), (0, 1), (0, 2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_2\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape LuigiRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (-1, 0), (-2, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_2\">\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_6\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"10\" width=\"10\" height=\"10\" id=\"svg_5\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"15\" y=\"20\" width=\"10\" height=\"10\" id=\"svg_3\"/>\r\n   <rect fill=\"#fff\" stroke=\"#000\" x=\"25\" y=\"30\" width=\"10\" height=\"10\" id=\"svg_1\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape WaluigiTop => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, 1), (1, 0), (2, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(180, 25, 25)\" id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"10\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"30\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape WaluigiBottom => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (0, -1), (-1, 0), (-2, 0) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"10\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"30\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape WaluigiLeft => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (0, 1), (0, 2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(90, 25, 25)\" id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"10\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"30\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
+
+            public static Shape WaluigiRight => new()
+            {
+                Points = new List<(int Row, int Column)> { (0, 0), (-1, 0), (0, -1), (0, -2) },
+                Icon = "<g>\r\n  <title>Layer 1</title>\r\n  <g transform=\"rotate(-90, 25, 25)\" id=\"svg_4\">\r\n   <rect id=\"svg_6\" height=\"10\" width=\"10\" y=\"30\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_5\" height=\"10\" width=\"10\" y=\"10\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_3\" height=\"10\" width=\"10\" y=\"20\" x=\"25\" stroke=\"#000\" fill=\"#fff\"/>\r\n   <rect id=\"svg_1\" height=\"10\" width=\"10\" y=\"30\" x=\"15\" stroke=\"#000\" fill=\"#fff\"/>\r\n  </g>\r\n </g>"
+            };
         }
 
-        public static List<List<(int Row, int Column)>> Shapes = new()
+        public static List<Shape> Shapes = new()
         {
             ShapeChoices.SinglePoint,
             ShapeChoices.TwoInARow,
@@ -121,7 +358,7 @@
             ShapeChoices.WaluigiRight
         };
 
-        public static List<(int Row, int Column)> RandomShape
+        public static Shape RandomShape
         {
             get
             {
@@ -135,7 +372,7 @@
             var shapes = new List<List<(int Row, int Column)>>();
             for (var i = 0; i < numberOfRandomShapes; i++)
             {
-                shapes.Add(RandomShape);
+                shapes.Add(RandomShape.Points);
             }
 
             return shapes;

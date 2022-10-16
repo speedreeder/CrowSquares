@@ -8,8 +8,10 @@ namespace CrowSquares.Levels
     {
         public override LevelType Type => LevelType.EggsInTheTrees;
 
-        public EggsInTheTrees()
+        public EggsInTheTrees(List<DropItem> grid)
         {
+            Grid = grid;
+            Name = "Eggs In The Trees";
             State = LevelState.Ongoing;
             InitialLevelCells = new List<DropItem>
             {
@@ -42,17 +44,17 @@ namespace CrowSquares.Levels
                     Zone = "77"
                 }
             };
-        }
-
-        public override void CheckLevel(List<DropItem> grid)
-        {
-            var gridItems = grid.Where(i => i.Zone.Contains("gutter")).ToList();
-            grid.ItemsFitInList(gridItems);
-
-            if (gridItems.All(g => !g.FitsInGrid))
+            Goals = new List<LevelGoal>
             {
-                State = LevelState.Failed;
-            }
+                new ()
+                {
+                    Current = 0,
+                    Goal = 5,
+                    GoalText = "Eggs",
+                    Icon = Icons.Material.Filled.Forest,
+                    IconColor = Color.Success
+                }
+            };
         }
     }
 }
