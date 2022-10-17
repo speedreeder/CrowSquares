@@ -108,7 +108,7 @@ namespace CrowSquares.Pages
             {
                 if (DropContainer.CanDrop(CurrentlyDraggingItem, coordinates))
                 {
-                    foundGridSquare.Class += " mud-border-info";
+                    foundGridSquare.Class = foundGridSquare.Class.Replace("mud-border-lines-default", "mud-border-info");
                 }
             }
             DropContainer.Refresh();

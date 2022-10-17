@@ -51,11 +51,7 @@
                                             T="DropItem"
                                             Identifier="@(coords)"
                                             DraggingClass="mud-theme-success"
-                                            CanDropClass="mud-border-info"
                                             Class="d-flex justify-center align-center border-2 border-solid docs-gray-bg mud-border-lines-default">
-                                            @*<ItemRenderer>
-                                                <MudIcon Icon="@Icons.Custom.Brands.Twitter" Color="Color.Primary" />
-                                            </ItemRenderer>*@
                                         </MudDropZone>
                                     </div>
                                 </MudItem>
@@ -68,7 +64,7 @@
         
         <MudGrid Justify="Justify.Center">
             <MudItem xs="3">
-                <MudDropZone 
+                <MudDropZone
                     T="DropItem"
                     ItemIsDisabled="@(item => !item.FitsInGrid)"
                     @ref="Gutter0"
@@ -76,6 +72,11 @@
                     @ondragend="() => OnDragEndGutter(Gutter0)"
                     Identifier="gutter0"
                     DisabledClass="gutter-disabled">
+                    <ItemRenderer>
+                        <div class="d-flex justify-center align-center flex-grow-1">
+                            <MudIcon Style="font-size: 10rem" ViewBox="0 0 50 40" Icon="@context.Icon" Color="@context.Color" />
+                        </div>
+                    </ItemRenderer>
                 </MudDropZone>
             </MudItem>
             <MudItem xs="3">
@@ -86,7 +87,12 @@
                     @ondragstart="() => OnDragStartGutter(Gutter1)"
                     @ondragend="() => OnDragEndGutter(Gutter1)"
                     Identifier="gutter1"
-                             DisabledClass="gutter-disabled">
+                    DisabledClass="gutter-disabled">
+                    <ItemRenderer>
+                        <div class="d-flex justify-center align-center flex-grow-1">
+                            <MudIcon Style="font-size: 10rem" ViewBox="0 0 50 40" Icon="@context.Icon" Color="@context.Color" />
+                        </div>
+                    </ItemRenderer>
                 </MudDropZone>
             </MudItem>
             <MudItem xs="3">
@@ -97,15 +103,19 @@
                     @ondragstart="() => OnDragStartGutter(Gutter2)"
                     @ondragend="() => OnDragEndGutter(Gutter2)"
                     Identifier="gutter2"
-                    DisabledClass="gutter-disabled"
-                >
+                    DisabledClass="gutter-disabled">
+                    <ItemRenderer>
+                        <div class="d-flex justify-center align-center flex-grow-1">
+                            <MudIcon Style="font-size: 10rem" ViewBox="0 0 50 40" Icon="@context.Icon" Color="@context.Color" />
+                        </div>
+                    </ItemRenderer>
                 </MudDropZone>
             </MudItem>
         </MudGrid>
     </ChildContent>
     <ItemRenderer>
         <div class="d-flex justify-center align-center flex-grow-1">
-            <MudIcon Style="font-size: 10rem" ViewBox="0 0 50 40" Icon="@context.Icon" Color="@context.Color" />
+            <MudIcon Icon="@context.Icon" Color="@context.Color" />
         </div>
     </ItemRenderer>
 </MudDropContainer>
