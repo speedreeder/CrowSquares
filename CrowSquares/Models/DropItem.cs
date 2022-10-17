@@ -1,4 +1,5 @@
 ﻿using CrowSquares.Extensions;
+using CrowSquares.Utilities;
 using MudBlazor;
 
 namespace CrowSquares.Models
@@ -11,6 +12,7 @@ namespace CrowSquares.Models
         public List<(int Row, int Column)> Points { get; set; }
         public bool FitsInGrid { get; set; }
         public bool IsLocked { get; set; }
+        public Shape Shape { get; set; }
 
         public bool CheckFitsInGrid(List<DropItem> gridItems)
         {
@@ -27,8 +29,8 @@ namespace CrowSquares.Models
                             var pointNotOccupied =
                                 gridItems.FirstOrDefault(g => g.Zone == transformedTuple.ToPointsString()) == null;
 
-                            return transformedTuple.Column is < 8 and >= 0 &&
-                                   transformedTuple.Row is < 8 and >= 0 &&
+                            return transformedTuple.Column is < 9 and >= 0 &&
+                                   transformedTuple.Row is < 9 and >= 0 &&
                                    pointNotOccupied;
                         });
 

@@ -42,7 +42,8 @@ namespace CrowSquares.Pages
                 {
                     Zone = dropItem.DropzoneIdentifier.ToPointsTuple(points.Row, points.Column).ToPointsString(),
                     Icon = Icons.Custom.Brands.Twitter,
-                    Color = Color.Primary
+                    Color = Color.Primary,
+                    Shape = dropItem.Item.Shape
                 });
             }
 
@@ -145,7 +146,9 @@ namespace CrowSquares.Pages
             if (identifierOfDropZone.Contains("gutter", StringComparison.Ordinal)) return false;
             CurrentlyDraggingItem = item;
 
-            var cursorSpaceNotOccupied = Items.All(x => identifierOfDropZone != x.Zone);
+            var cursorSpaceOccupied = Items.Any(x => identifierOfDropZone == x.Zone);
+
+            if (cursorSpaceOccupied) return false;
 
             var otherPointsNotOccupiedOrOutside =
                 Items.Select(i => i.Zone).All(z =>
@@ -157,7 +160,7 @@ namespace CrowSquares.Pages
                                transformedTuple.Row is < 9 and >= 0;
                     }));
             
-            return cursorSpaceNotOccupied && otherPointsNotOccupiedOrOutside;
+            return otherPointsNotOccupiedOrOutside;
         }
 
         public void GenerateShapes()
@@ -171,6 +174,7 @@ namespace CrowSquares.Pages
                 {
                     Color = Color.Primary,
                     Icon = shape.Icon,
+                    Shape = shape,
                     //Icon = Icons.Custom.Brands.Twitter,
                     Points = shape.Points,
                     Zone = $"gutter{i}"
